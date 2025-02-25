@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ir.thesinaa.gearticktest"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ir.thesinaa.gearticktest"
