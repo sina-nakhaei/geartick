@@ -15,7 +15,7 @@ class NetworkUsageMonitor {
 
     fun launch(
         context: CoroutineContext = Dispatchers.IO,
-        updateIntervalMs: Long,
+        updateIntervalMs: Long = 1000,
         callback: (
             totalReceivedBytes: Long,
             totalSentBytes: Long,
