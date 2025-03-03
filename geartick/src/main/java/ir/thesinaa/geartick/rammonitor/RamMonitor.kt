@@ -16,7 +16,7 @@ class RamMonitor(context: Context) {
 
     fun launch(
         context: CoroutineContext = Dispatchers.IO,
-        delayMillis: Long = 1000,
+        updateIntervalMs: Long = 1000,
         onRamUpdate: (used: Long, available: Long) -> Unit
     ) {
         monitoringJob = CoroutineScope(context).launch {
@@ -29,7 +29,7 @@ class RamMonitor(context: Context) {
                     onRamUpdate(used, available)
                 }
 
-                delay(delayMillis)
+                delay(updateIntervalMs)
             }
         }
     }

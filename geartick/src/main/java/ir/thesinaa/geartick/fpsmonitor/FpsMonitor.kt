@@ -9,9 +9,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class FpsMonitor(
-    private val intervalMillis: Long = INTERVAL_MILLIS
-) {
+class FpsMonitor {
     private var frameCount = 0
     private var lastTime = System.nanoTime()
     private val choreographer = Choreographer.getInstance()
@@ -26,6 +24,7 @@ class FpsMonitor(
 
     fun launch(
         context: CoroutineContext = Dispatchers.Main,
+        updateIntervalMs: Long = 1000,
         onFpsUpdate: (fps: Double) -> Unit
     ) {
         frameCount = 0
@@ -34,7 +33,7 @@ class FpsMonitor(
 
         monitoringJob = CoroutineScope(context).launch {
             while (isActive) {
-                delay(intervalMillis)
+                delay(updateIntervalMs)
                 val currentTime = System.nanoTime()
                 val elapsedTime = (currentTime - lastTime).toSeconds()
 
@@ -49,10 +48,6 @@ class FpsMonitor(
     fun cancel() {
         choreographer.removeFrameCallback(frameCallback)
         monitoringJob?.cancel()
-    }
-
-    companion object {
-        private const val INTERVAL_MILLIS = 1000L
     }
 }
 
