@@ -12,8 +12,6 @@ class RamMonitor(context: Context) {
 
     private val memoryInfo = ActivityManager.MemoryInfo()
 
-    init { activityManager.getMemoryInfo(memoryInfo) }
-
     fun launch(
         context: CoroutineContext = Dispatchers.IO,
         updateIntervalMs: Long = 1000,
@@ -22,6 +20,7 @@ class RamMonitor(context: Context) {
         monitoringJob = CoroutineScope(context).launch {
             while (isActive) {
                 withContext(Dispatchers.Main) {
+                    activityManager.getMemoryInfo(memoryInfo)
                     val totalRam = memoryInfo.totalMem.toMegaByte()
                     val available = memoryInfo.availMem.toMegaByte()
                     val used = totalRam - available
